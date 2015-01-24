@@ -10,7 +10,7 @@ var Base = {
       bar: null,
       messages: [],
       toggled: false,
-      showClose: true
+      widget: true
     };
   },
   componentDidMount: function() {
@@ -47,7 +47,7 @@ var Base = {
     this.setState({toggled: false});
   },
   _renderClose: function() {
-    return this.state.showClose ? (
+    return this.state.widget ? (
       <button className="close" onClick={this._close}>
         &times;
       </button>
@@ -55,9 +55,13 @@ var Base = {
   },
   render: function() {
     var bar = this.state.bar;
+    var className = React.addons.classSet({
+      'space_bar': true,
+      'widget': this.state.widget
+    });
     return this.state.toggled ? (
       bar ? (
-        <div className="space_bar">
+        <div className={className}>
           <header>
             <h2>{bar.title}</h2>
             {this._renderClose()}

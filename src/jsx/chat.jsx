@@ -11,9 +11,6 @@ var Message = React.createClass({
     var message = this.props;
     return (
       <li>
-        <div className="avatar">
-          <img src={message.avatarUrl} />
-        </div>
         <span className="name">{message.name}</span>
         <span className="timestamp">{message.timestamp}</span>
         <div
@@ -64,7 +61,6 @@ var Chat = React.createClass({
     var message = {
       name: "Fancy Franklin",
       timestamp: moment().calendar(),
-      avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
       text: text,
     };
     this.props.onSubmitMessage(message);

@@ -28,10 +28,10 @@
 
 .space_bar {
   position: absolute;
-  top: 0;
-  right: 0;
   bottom: 0;
-  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
 
   background: white;
   font-size: 16px;
@@ -67,9 +67,10 @@
   header {
     background: #333;
     padding: 0 20px;
+    position: relative;
+
     height: 80px;
     line-height: 80px;
-    position: relative;
 
     h2 {
       color: white;
@@ -95,7 +96,7 @@
     bottom: 0;
     left: 0;
 
-    border-right: 1px solid #eee;
+    border-right: 1px solid silver;
 
     .messages {
       position: absolute;
@@ -104,7 +105,7 @@
       bottom: 80px;
       left: 0;
 
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid silver;
       overflow-y: auto;
 
       ul {
@@ -113,22 +114,9 @@
         margin: 0;
 
         li {
-          padding: 10px 20px 10px 70px;
-          border-top: 1px solid #eee;
+          padding: 10px 20px;
+          border-top: 1px solid silver;
           position: relative;
-
-          .avatar {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
 
           .name {
             font-weight: bold;
@@ -151,13 +139,51 @@
       padding: 10px 20px;
 
       textarea {
-        border: 1px solid #eee;
+        border: 1px solid silver;
         width: 100%;
         resize: none;
         padding: 10px;
 
         &:focus {
           outline: none;
+        }
+      }
+    }
+  }
+
+  &.widget {
+    right: 0;
+    width: 300px;
+    height: 400px;
+    border-left: 1px solid silver;
+    font-size: 12px;
+    header {
+      height: 30px;
+      line-height: 30px;
+      padding: 0 5px;
+      h2 {
+        font-size: 1.2em;
+      }
+      .close {
+        right: 5px;
+        top: 4px;
+      }
+    }
+    .chat {
+      top: 30px;
+      .messages {
+        bottom: 40px;
+        ul {
+          li {
+            padding: 5px 10px;
+          }
+        }
+      }
+      .chatbox {
+        padding: 0 5px;
+        textarea {
+          font-size: 12px;
+          padding: 5px;
         }
       }
     }

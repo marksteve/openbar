@@ -3,6 +3,7 @@ var Router = require('react-router');
 var mui = require('material-ui');
 
 var Chat = require('./chat.jsx');
+var backend = require('./backend.js');
 
 var Bar = React.createClass({
   mixins: [Router.State],
@@ -12,19 +13,17 @@ var Bar = React.createClass({
     };
   },
   componentDidMount: function() {
-    this.setState({
-      bar: {
-        id: this.getParams().barId,
-        name: "Test"
-      }
-    });
+    backend.Bar.get(this.getParams().barId, this._loadBar);
+  },
+  _loadBar: function(bar) {
+    this.setState({bar: bar});
   },
   render: function() {
     var bar = this.state.bar;
     return bar ? (
       <div className="bar">
         <header>
-          <h2>{bar.name}</h2>
+          <h2>{bar.title}</h2>
         </header>
         <Chat bar={bar} />
       </div>

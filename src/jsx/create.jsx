@@ -5,13 +5,11 @@ var mui = require('material-ui');
 var Create = React.createClass({
   _onSubmit: function(e) {
     e.preventDefault();
-    var name = this.refs.barName.getValue();
-    if (name.length < 1) {
+    var title = this.refs.barTitle.getValue();
+    if (title.length < 1) {
       return;
     }
-    this.props.onCreateBar({
-      name: name
-    });
+    this.props.onCreateBar(title);
   },
   render: function() {
     return (
@@ -20,11 +18,11 @@ var Create = React.createClass({
           <form onSubmit={this._onSubmit}>
             <h2>Create a bar</h2>
             <mui.Input
-              ref="barName"
-              name="barName"
+              ref="barTitle"
+              title="barTitle"
               inputStyle="floating"
               type="text"
-              placeholder="Name"
+              placeholder="title"
             />
             <mui.RaisedButton type="submit" label="Create" primary={true} />
           </form>

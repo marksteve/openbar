@@ -15,7 +15,7 @@ var Message = React.createClass({
           <img src={message.avatarUrl} />
         </div>
         <span className="name">{message.name}</span>
-        <span className="timestamp">{message.timestamp.calendar()}</span>
+        <span className="timestamp">{message.timestamp}</span>
         <div className="text">{message.text}</div>
       </li>
     );
@@ -45,44 +45,19 @@ var Chat = React.createClass({
     };
   },
   componentDidMount: function() {
-    this.setState({
-      messages: [
-        {
-          key: id(),
-          name: "Fancy Franklin",
-          timestamp: moment(),
-          avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
-          text: "Hello, world",
-        },
-        {
-          key: id(),
-          name: "Fancy Franklin",
-          timestamp: moment(),
-          avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
-          text: "Hello, world",
-        },
-        {
-          key: id(),
-          name: "Fancy Franklin",
-          timestamp: moment(),
-          avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
-          text: "Hello, world",
-        },
-        {
-          key: id(),
-          name: "Fancy Franklin",
-          timestamp: moment(),
-          avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
-          text: "Hello, world",
-        },
-      ]
-    });
+    this.props.bar.onMessage(this._loadMessage);
   },
   componentDidUpdate: function(prevProps, prevState) {
     if (prevState.messages.length !== this.state.messages.length) {
       var messagesDiv = this.refs.messages.getDOMNode();
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
+  },
+  _loadMessage: function(message) {
+    this.setState(React.addons.update(
+      this.state,
+      {messages: {$push: [message]}}
+    ));
   },
   _renderMessages: function() {
     return this.state.messages.map(React.createFactory(Message));
@@ -92,16 +67,12 @@ var Chat = React.createClass({
       return;
     }
     var message = {
-      key: id(),
       name: "Fancy Franklin",
-      timestamp: moment(),
+      timestamp: moment().calendar(),
       avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
       text: text,
     };
-    this.setState(React.addons.update(
-      this.state,
-      {messages: {$push: [message]}}
-    ));
+    this.props.bar.newMessage(message);
   },
   render: function() {
     return (

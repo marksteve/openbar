@@ -40,6 +40,9 @@ var Base = {
       this.refs.chat.scrollToBottom();
     }
   },
+  _submitMessage: function(message) {
+    this.state.bar.newMessage(message);
+  },
   _close: function() {
     this.setState({toggled: false});
   },
@@ -62,6 +65,7 @@ var Base = {
           <Chat
             ref="chat"
             messages={this.state.messages}
+            onSubmitMessage={this._submitMessage}
           />
         </div>
       ) : (

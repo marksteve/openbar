@@ -67,7 +67,7 @@ var Chat = React.createClass({
       avatarUrl: "http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm",
       text: text,
     };
-    this.props.bar.newMessage(message);
+    this.props.onSubmitMessage(message);
   },
   render: function() {
     return (

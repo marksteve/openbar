@@ -17,7 +17,10 @@ var Base = {
     var barId = this.props.id || this.getParams().barId;
     Backend.Bar.get(barId, this._loadBar);
   },
-  componentDidUpdate: function() {
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.state.bar && !prevState.bar) {
+      this.state.bar.onMessage(this._loadMessage);
+    }
     if (this.state.bar && this.state.toggled) {
       this.refs.chat.scrollToBottom();
     }
@@ -29,7 +32,6 @@ var Base = {
   },
   _loadBar: function(bar) {
     this.setState({bar: bar});
-    this.state.bar.onMessage(this._loadMessage);
   },
   _loadMessage: function(message) {
     this.setState(React.addons.update(

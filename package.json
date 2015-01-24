@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildjs": "watchify src/jsx/main.jsx -t reactify -o dist/main.js -v",
+    "buildwidget": "watchify src/jsx/widget.jsx -t reactify -o dist/widget.js -v",
     "buildcss": "autoless src/less/ dist/"
   },
   "repository": {
@@ -25,7 +26,6 @@
   "dependencies": {
     "firebase": "^2.1.1",
     "marked": "^0.3.2",
-    "material-ui": "^0.5.0",
     "moment": "^2.9.0",
     "react": "^0.12.2",
     "react-router": "^0.11.6",

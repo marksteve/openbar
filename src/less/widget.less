@@ -1,0 +1,166 @@
+.space_bar-button {
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  button {
+    border-radius: 0;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    text-indent: -10000px;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    background: white url(../images/space.png) no-repeat center center;
+    background-size: 20px;
+    border: 2px solid black;
+  }
+
+  button:hover {
+    background-color: dodgerblue;
+  }
+}
+
+.space_bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: white;
+  font-size: 16px;
+  line-height: 1.5;
+
+  * {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  @-webkit-keyframes loading {
+    to { background-position: -7680px; }
+  }
+
+  .loading {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    transform: translateY(-50%);
+
+    width: 256px;
+    height: 256px;
+
+    background-image: url(../images/loading.png);
+    -webkit-animation: loading 1s steps(30) infinite;
+  }
+
+  header {
+    background: #333;
+    padding: 0 20px;
+    height: 80px;
+    line-height: 80px;
+    position: relative;
+
+    h2 {
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      line-height: inherit;
+      margin: 0;
+    }
+
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      color: white;
+      font-size: 2em;
+    }
+  }
+
+  .chat {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    border-right: 1px solid #eee;
+
+    .messages {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 80px;
+      left: 0;
+
+      border-bottom: 1px solid #eee;
+      overflow-y: auto;
+
+      ul {
+        list-style: none;
+        padding: 100% 0 0 0;
+        margin: 0;
+
+        li {
+          padding: 10px 20px 10px 70px;
+          border-top: 1px solid #eee;
+          position: relative;
+
+          .avatar {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .name {
+            font-weight: bold;
+            margin-right: 10px;
+          }
+
+          .timestamp {
+            color: silver;
+          }
+        }
+      }
+    }
+
+    .chatbox {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      padding: 10px 20px;
+
+      textarea {
+        border: 1px solid #eee;
+        width: 100%;
+        resize: none;
+        padding: 10px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}
+

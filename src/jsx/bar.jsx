@@ -1,36 +1,74 @@
 var React = require('react/addons');
 var Router = require('react-router');
-var mui = require('material-ui');
 
+var Backend = require('./backend.js');
 var Chat = require('./chat.jsx');
-var backend = require('./backend.js');
 
-var Bar = React.createClass({
-  mixins: [Router.State],
+var Base = {
   getInitialState: function() {
     return {
-      bar: null
+      bar: null,
+      toggled: false,
+      showClose: true
     };
   },
   componentDidMount: function() {
-    backend.Bar.get(this.getParams().barId, this._loadBar);
+    var barId = this.props.id || this.getParams().barId;
+    Backend.Bar.get(barId, this._loadBar);
+  },
+  toggle: function() {
+    this.setState({
+      toggled: !this.state.toggled
+    });
   },
   _loadBar: function(bar) {
     this.setState({bar: bar});
   },
+  _close: function() {
+    this.setState({toggled: false});
+  },
+  _renderClose: function() {
+    return this.state.showClose ? (
+      <button className="close" onClick={this._close}>
+        &times;
+      </button>
+    ) : null;
+  },
   render: function() {
     var bar = this.state.bar;
-    return bar ? (
-      <div className="bar">
-        <header>
-          <h2>{bar.title}</h2>
-        </header>
-        <Chat bar={bar} />
-      </div>
-    ) : (
-      <div className="loading" />
-    );
+    return this.state.toggled ? (
+      bar ? (
+        <div className="space_bar">
+          <header>
+            <h2>{bar.title}</h2>
+            {this._renderClose()}
+          </header>
+          <Chat bar={bar} />
+        </div>
+      ) : (
+        <div className="space_bar">
+          <div className="loading" />
+        </div>
+      )
+    ) : null;
   }
-});
+};
 
-module.exports = Bar;
+var Widget = React.createClass(Base);
+var Route = React.createClass(
+  React.addons.update(Base, {$merge: {
+    getInitialState: function() {
+      return {
+        bar: null,
+        toggled: true,
+        showClose: false
+      };
+    },
+    mixins: [Router.State]
+  }})
+);
+
+module.exports = {
+  Widget: Widget,
+  Route: Route
+};

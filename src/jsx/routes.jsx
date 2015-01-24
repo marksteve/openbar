@@ -8,7 +8,7 @@ var DefaultRoute = Router.DefaultRoute;
 var App = require('./app.jsx');
 
 var Create = require('./create.jsx');
-var Bar = require('./bar.jsx');
+var Bar = require('./bar.jsx').Route;
 
 module.exports = (
   <Route name="root" path="/bar" handler={App}>

@@ -1,11 +1,9 @@
-
 var React = require('react/addons');
-var mui = require('material-ui');
 
 var Create = React.createClass({
   _onSubmit: function(e) {
     e.preventDefault();
-    var title = this.refs.barTitle.getValue();
+    var title = this.refs.barTitle.getDOMNode().value;
     if (title.length < 1) {
       return;
     }
@@ -14,19 +12,18 @@ var Create = React.createClass({
   render: function() {
     return (
       <div className="create">
-        <mui.Paper zDepth={1}>
-          <form onSubmit={this._onSubmit}>
-            <h2>Create a bar</h2>
-            <mui.Input
-              ref="barTitle"
-              name="barTitle"
-              inputStyle="floating"
-              type="text"
-              placeholder="Name"
-            />
-            <mui.RaisedButton type="submit" label="Create" primary={true} />
-          </form>
-        </mui.Paper>
+        <form onSubmit={this._onSubmit}>
+          <h2>Create a bar</h2>
+          <p>
+            <label>
+            Name it! Make it your own.
+            <input ref="barTitle" type="text" placeholder="Name" />
+            </label>
+          </p>
+          <p>
+            <button type="submit">Create</button>
+          </p>
+        </form>
       </div>
     );
   }

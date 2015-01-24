@@ -1,5 +1,4 @@
 var React = require('react/addons');
-var mui = require('material-ui');
 var moment = require('moment');
 var marked = require('marked');
 

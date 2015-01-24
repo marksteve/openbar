@@ -1,132 +1,64 @@
-@import (reference) "node_modules/material-ui/src/less/scaffolding.less";
-@import (reference) "src/less/variables.less";
-
-body {
-  background: @indigo-50;
+body, input, textarea, button {
+  font: 16px/1.5 Source Sans Pro, sans-serif;
 }
 
-@-webkit-keyframes loading {
-  to { background-position: -7680px; }
+h1, h2, h3, h4, h5 {
+  margin: 0 0 0.5em 0;
 }
 
-.loading {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-  transform: translateY(-50%);
-
-  width: 256px;
-  height: 256px;
-
-  background-image: url(../images/loading.png);
-  -webkit-animation: loading 1s steps(30) infinite;
+label > input {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid;
+  padding: 10px 0;
+  font-size: 1.2em;
 }
 
+input:focus,
+button:focus {
+  outline: none;
+}
+
+.button, button {
+  border: 0.2em solid;
+  border-radius: 0.2em;
+  background: transparent;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button:hover, button:hover {
+  color: dodgerblue;
+}
+
+.index {
+  padding: 100px 0;
+  text-align: center;
+  h1 {
+    background: url(../images/logo.png) no-repeat center center;
+    text-indent: -10000px;
+    height: 121px;
+    margin-bottom: 100px;
+  }
+  .try {
+    background: #eee;
+    padding: 50px 0 80px 0;
+    margin-bottom: 50px;
+  }
+  button, .button {
+    font-size: 1.2em;
+  }
+}
 
 .create {
   background: white;
   max-width: 400px;
-  margin: 0 auto;
-
-  form {
-    padding: 20px;
-  }
-}
-
-.bar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  background: white;
-
-  header {
-    background: @indigo-300;
-    padding: 10px 20px;
-
-    h2 {
-      color: white;
-    }
-  }
-}
-
-.chat {
-  position: absolute;
-  top: 80px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  border-right: 1px solid @border-color;
-
-  .messages {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 80px;
-    left: 0;
-
-    border-bottom: 1px solid @border-color;
-    overflow-y: auto;
-
-    ul {
-      padding-top: 100%;
-      list-style: none;
-
-      li {
-        padding: 10px 20px 10px 70px;
-        border-top: 1px solid @border-color;
-        position: relative;
-
-        .avatar {
-          position: absolute;
-          top: 10px;
-          left: 20px;
-          width: 40px;
-          height: 40px;
-
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-
-        .name {
-          font-weight: bold;
-          margin-right: 10px;
-        }
-
-        .timestamp {
-          color: @grey-600;
-        }
-      }
-    }
-  }
-
-  .chatbox {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    padding: 10px 20px;
-
-    textarea {
-      border: 1px solid @border-color;
-      width: 100%;
-      resize: none;
-      padding: 10px;
-
-      &:focus {
-        outline: none;
-      }
-      &::-webkit-input-placeholder {
-        padding: 10px 20px;
-      }
-    }
-  }
+  margin: 100px auto;
 }

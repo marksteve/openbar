@@ -2,6 +2,9 @@
   "name": "ss15-incorgito",
   "root": "./",
   "clean_urls": true,
+  "routes": {
+    "/bar/**": "bar.html"
+  },
   "error_page": "error.html",
   "exclude": [
     "*.json",

@@ -12,16 +12,18 @@ Bar.prototype.onMessage = function(callback) {
   this.ref.child("messages").on("child_added", function(ss) {
     callback(ss.val());
   });
-}
+};
+
 Bar.prototype.newMessage = function(message) {
   this.ref.child("messages").push(message);
-}
+};
 
 Bar.create = function(title) {
   var meta = {title: title};
   var ref = barsRef.push({meta: meta});
   return new Bar(ref, meta);
-}
+};
+
 Bar.get = function(key, callback, errCallback) {
   var ref = barsRef.child(key);
   ref.child("meta").once("value", function(ss) {
@@ -31,11 +33,12 @@ Bar.get = function(key, callback, errCallback) {
       errCallback(new Error("Bar does not exist."));
     }
   }, errCallback);
-}
+};
 
 
 module.exports = {
   Bar: Bar
-}
-// for debugging						 
+};
+
+// for debugging
 window.root = rootRef;

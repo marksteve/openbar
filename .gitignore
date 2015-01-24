@@ -1,0 +1,4 @@
+.divshot-cache/
+
+node_modules/
+dist/

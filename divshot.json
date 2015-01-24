@@ -1,0 +1,12 @@
+{
+  "name": "ss15-incorgito",
+  "root": "./",
+  "clean_urls": true,
+  "error_page": "error.html",
+  "exclude": [
+    "*.json",
+    "src/",
+    "node_modules/",
+    "bower_components/"
+  ]
+}

@@ -25,8 +25,10 @@ var Message = React.createClass({
 var ChatTextarea = React.createClass({
   _onKeyDown: function(e) {
     if (e.keyCode == 13 && !e.shiftKey) {
+      var textarea = this.refs.textarea.getDOMNode();
       e.preventDefault();
-      this.props.onSubmit(this.refs.textarea.getDOMNode().value);
+      this.props.onSubmit(textarea.value);
+      textarea.value = '';
     }
   },
   render: function() {
@@ -76,10 +78,19 @@ var Chat = React.createClass({
       ]
     });
   },
+  componentDidUpdate: function(prevProps, prevState) {
+    if (prevState.messages.length !== this.state.messages.length) {
+      var messagesDiv = this.refs.messages.getDOMNode();
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+  },
   _renderMessages: function() {
     return this.state.messages.map(React.createFactory(Message));
   },
   _submitMessage: function(text) {
+    if (text.length < 1) {
+      return;
+    }
     var message = {
       key: id(),
       name: "Fancy Franklin",
@@ -95,7 +106,7 @@ var Chat = React.createClass({
   render: function() {
     return (
       <div className="chat">
-        <div className="messages">
+        <div ref="messages" className="messages">
           <ul>
             {this._renderMessages()}
           </ul>

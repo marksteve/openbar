@@ -50,19 +50,16 @@ body {
     bottom: 80px;
     left: 0;
 
+    border-bottom: 1px solid @border-color;
     overflow-y: auto;
 
     ul {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-
+      padding-top: 100%;
       list-style: none;
 
       li {
         padding: 10px 20px 10px 70px;
-        border-bottom: 1px solid @border-color;
+        border-top: 1px solid @border-color;
         position: relative;
 
         .avatar {

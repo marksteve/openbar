@@ -5,16 +5,25 @@ body {
   background: @indigo-50;
 }
 
+@-webkit-keyframes loading {
+  to { background-position: -7680px; }
+}
+
 .loading {
   position: absolute;
   top: 50%;
-  width: 100%;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
   transform: translateY(-50%);
 
-  font-size: 2em;
-  font-weight: 200;
-  text-align: center;
+  width: 256px;
+  height: 256px;
+
+  background-image: url(../images/loading.png);
+  -webkit-animation: loading 1s steps(30) infinite;
 }
+
 
 .create {
   background: white;

@@ -28,7 +28,7 @@ var Bar = React.createClass({
         <Chat bar={bar} />
       </div>
     ) : (
-      <div className="loading">Loading&hellip;</div>
+      <div className="loading" />
     );
   }
 });

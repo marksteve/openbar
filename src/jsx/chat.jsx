@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var mui = require('material-ui');
 var moment = require('moment');
+var marked = require('marked');
 
 function id() {
   return (Math.random() * Math.pow(2, 64)).toString(36);
@@ -16,7 +17,10 @@ var Message = React.createClass({
         </div>
         <span className="name">{message.name}</span>
         <span className="timestamp">{message.timestamp}</span>
-        <div className="text">{message.text}</div>
+        <div
+          className="text"
+          dangerouslySetInnerHTML={{__html: marked(message.text)}}
+        />
       </li>
     );
   }
@@ -31,9 +35,17 @@ var ChatTextarea = React.createClass({
       textarea.value = '';
     }
   },
+  componentDidMount: function() {
+    this.refs.textarea.getDOMNode().focus();
+  },
   render: function() {
     return (
-      <textarea ref="textarea" rows="1" onKeyDown={this._onKeyDown} />
+      <textarea
+        ref="textarea"
+        rows="1"
+        onKeyDown={this._onKeyDown}
+        placeholder="Type in Markdown&hellip;"
+      />
     );
   }
 });

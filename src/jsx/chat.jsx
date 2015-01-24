@@ -8,6 +8,8 @@ marked.setOptions({
   sanitize: true
 });
 
+var Backend = require('./backend');
+
 var URLRegex = /(http(?:s?):[^ <\n]+)/;
 var TagRegex = /<.+?>/g;
 
@@ -85,6 +87,25 @@ var ChatTextarea = React.createClass({
 });
 
 var Chat = React.createClass({
+  getInitialState: function() {
+    return {
+      recordToggled: false,
+      vr: null
+    };
+  },
+  componentDidUpdate: function(prevProps, prevState) {
+    if (prevState.recordToggled !== this.state.recordToggled) {
+      if (this.state.recordToggled) {
+        var vr = new Backend.VideoRecorder(
+          this.refs.video.getDOMNode(),
+          this._onUploadRecord,
+          this._onUploadRecordError,
+          this._onStopRecord
+        );
+        this.setState({vr: vr});
+      }
+    }
+  },
   scrollToBottom: function() {
     var messagesDiv = this.refs.messages.getDOMNode();
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -111,9 +132,44 @@ var Chat = React.createClass({
     };
     this.props.onSubmitMessage(message);
   },
+  _toggleRecord: function() {
+    this.setState({
+      recordToggled: !this.state.recordToggled
+    });
+  },
+  _renderRecord: function() {
+    return this.state.recordToggled ? (
+      <div className="record-overlay">
+        <video ref="video" muted autoPlay />
+        <div className="actions">
+          <button onClick={this._startRecord}>
+            Start
+          </button>
+          <button onClick={this._stopRecord}>
+            Stop
+          </button>
+        </div>
+      </div>
+    ) : null;
+  },
+  _startRecord: function() {
+    this.state.vr.start();
+  },
+  _stopRecord: function() {
+    this.state.vr.stop();
+  },
+  _onUploadRecord: function(url) {
+    this._submitMessage(url);
+  },
+  _onUploadRecordError: function() {
+  },
+  _onStopRecord: function() {
+    this._toggleRecord();
+  },
   render: function() {
     return (
       <div className="chat">
+        {this._renderRecord()}
         <div ref="messages" className="messages">
           <ul>
             {this._renderMessages()}
@@ -123,6 +179,12 @@ var Chat = React.createClass({
           <ChatTextarea
             onSubmit={this._submitMessage}
           />
+          <button
+            className="record"
+            onClick={this._toggleRecord}
+          >
+            Record
+          </button>
         </div>
       </div>
     );

@@ -38,9 +38,9 @@ Bar.get = function(key, callback, errCallback) {
 };
 
 
-navigator.getUserMedia  = navigator.getUserMedia || 
+navigator.getUserMedia  = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia || 
+    navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
 
 function VideoRecorder(videoElem, finishCallback, errCallback, stopCallback) {
@@ -57,7 +57,7 @@ VideoRecorder.prototype.start = function() {
     this.errCallback("Browser incapable");
     return;
   }
-  navigator.webkitGetUserMedia({video: true, audio: true}, this._record.bind(this), this.errCallback);
+  navigator.getUserMedia({video: true, audio: true}, this._record.bind(this), this.errCallback);
 };
 VideoRecorder.prototype.stop = function() {
   if (this.recorder) {
@@ -67,7 +67,7 @@ VideoRecorder.prototype.stop = function() {
     this.stream = null;
     this.stopCallback();
   }
-}
+};
 VideoRecorder.prototype._record = function(stream) {
   this.stream = stream;
   this.videoElem.src = window.URL.createObjectURL(stream);
@@ -95,7 +95,7 @@ VideoRecorder.prototype._upload = function(blobs) {
             {name: ":original", fields: "audio", as: "audio"}
           ]
         }
-      } 
+      }
     }
   };
   var formData = new FormData();
@@ -116,7 +116,7 @@ VideoRecorder.prototype._upload = function(blobs) {
         request.open("GET", data.assembly_ssl_url);
         setTimeout(function() { request.send(); }, 2000);
       } else if (data.ok == "ASSEMBLY_COMPLETED") {
-        this.finishCallback(data.results.merge[0].ssl_url);
+        this.finishCallback(data.results.merge[0].url);
       } else {
 	this.errCallback(new Error("Unexpected response: " + data.ok));
       }

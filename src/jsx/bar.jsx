@@ -8,6 +8,7 @@ var Base = {
   getInitialState: function() {
     return {
       bar: null,
+      messages: [],
       toggled: false,
       showClose: true
     };
@@ -16,6 +17,11 @@ var Base = {
     var barId = this.props.id || this.getParams().barId;
     Backend.Bar.get(barId, this._loadBar);
   },
+  componentDidUpdate: function() {
+    if (this.state.bar && this.state.toggled) {
+      this.refs.chat.scrollToBottom();
+    }
+  },
   toggle: function() {
     this.setState({
       toggled: !this.state.toggled
@@ -23,6 +29,16 @@ var Base = {
   },
   _loadBar: function(bar) {
     this.setState({bar: bar});
+    this.state.bar.onMessage(this._loadMessage);
+  },
+  _loadMessage: function(message) {
+    this.setState(React.addons.update(
+      this.state,
+      {messages: {$push: [message]}}
+    ));
+    if (this.state.toggled) {
+      this.refs.chat.scrollToBottom();
+    }
   },
   _close: function() {
     this.setState({toggled: false});
@@ -43,7 +59,10 @@ var Base = {
             <h2>{bar.title}</h2>
             {this._renderClose()}
           </header>
-          <Chat bar={bar} />
+          <Chat
+            ref="chat"
+            messages={this.state.messages}
+          />
         </div>
       ) : (
         <div className="space_bar">
@@ -60,6 +79,7 @@ var Route = React.createClass(
     getInitialState: function() {
       return {
         bar: null,
+        messages: [],
         toggled: true,
         showClose: false
       };

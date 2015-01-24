@@ -50,28 +50,12 @@ var ChatTextarea = React.createClass({
 });
 
 var Chat = React.createClass({
-  getInitialState: function() {
-    return {
-      messages: []
-    };
-  },
-  componentDidMount: function() {
-    this.props.bar.onMessage(this._loadMessage);
-  },
-  componentDidUpdate: function(prevProps, prevState) {
-    if (prevState.messages.length !== this.state.messages.length) {
-      var messagesDiv = this.refs.messages.getDOMNode();
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-  },
-  _loadMessage: function(message) {
-    this.setState(React.addons.update(
-      this.state,
-      {messages: {$push: [message]}}
-    ));
+  scrollToBottom: function() {
+    var messagesDiv = this.refs.messages.getDOMNode();
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   },
   _renderMessages: function() {
-    return this.state.messages.map(React.createFactory(Message));
+    return this.props.messages.map(React.createFactory(Message));
   },
   _submitMessage: function(text) {
     if (text.length < 1) {

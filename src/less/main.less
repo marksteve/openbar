@@ -1,10 +1,112 @@
-.app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 0;
+@import (reference) "node_modules/material-ui/src/less/scaffolding.less";
+@import (reference) "src/less/variables.less";
+
+body {
+  background: @indigo-50;
 }
 
 .create {
+  background: white;
   max-width: 400px;
   margin: 0 auto;
+
+  form {
+    padding: 20px;
+  }
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: white;
+
+  header {
+    background: @indigo-300;
+    padding: 10px 20px;
+
+    h2 {
+      color: white;
+    }
+  }
+}
+
+.chat {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-right: 1px solid @border-color;
+
+  .messages {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 80px;
+    left: 0;
+
+    overflow-y: auto;
+
+    ul {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      list-style: none;
+
+      li {
+        padding: 10px 20px 10px 70px;
+        border-bottom: 1px solid @border-color;
+        position: relative;
+
+        .avatar {
+          position: absolute;
+          top: 10px;
+          left: 20px;
+          width: 40px;
+          height: 40px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .name {
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        .timestamp {
+          color: @grey-600;
+        }
+      }
+    }
+  }
+
+  .chatbox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 10px 20px;
+
+    textarea {
+      border: 1px solid @border-color;
+      width: 100%;
+      resize: none;
+      padding: 10px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }

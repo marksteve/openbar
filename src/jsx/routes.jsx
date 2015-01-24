@@ -8,10 +8,12 @@ var DefaultRoute = Router.DefaultRoute;
 var App = require('./app.jsx');
 
 var Create = require('./create.jsx');
+var Bar = require('./bar.jsx');
 
 module.exports = (
-  <Route name="app" path="/bar" handler={App}>
+  <Route name="root" path="/bar" handler={App}>
     <Route name="create" handler={Create} />
+    <Route name="bar" path=":barId" handler={Bar} />
     <DefaultRoute handler={Create} />
   </Route>
 );

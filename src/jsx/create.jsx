@@ -19,10 +19,10 @@ var Create = React.createClass({
             <h2>Create a bar</h2>
             <mui.Input
               ref="barTitle"
-              title="barTitle"
+              name="barTitle"
               inputStyle="floating"
               type="text"
-              placeholder="title"
+              placeholder="Name"
             />
             <mui.RaisedButton type="submit" label="Create" primary={true} />
           </form>

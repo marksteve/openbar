@@ -32,11 +32,16 @@ var Base = {
       user: null,
       bar: null,
       messages: [],
-      loading: false,
+      loading: true,
       toggled: false,
       widget: true,
       askPassphrase: false
     };
+  },
+  componentDidMount: function() {
+    if (!this.state.widget) {
+      this._getBar();
+    }
   },
   componentDidUpdate: function(prevProps, prevState) {
     // First toggle
@@ -160,10 +165,13 @@ var Route = React.createClass(
   React.addons.update(Base, {$merge: {
     getInitialState: function() {
       return {
+        user: null,
         bar: null,
         messages: [],
+        loading: false,
         toggled: true,
-        showClose: false
+        widget: false,
+        askPassphrase: false
       };
     },
     mixins: [Router.State]

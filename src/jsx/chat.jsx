@@ -93,6 +93,7 @@ var Chat = React.createClass({
   getInitialState: function() {
     return {
       recordToggled: false,
+      recording: false,
       vr: null
     };
   },
@@ -141,11 +142,15 @@ var Chat = React.createClass({
       <div className="record-overlay">
         <video ref="video" muted autoPlay />
         <div className="actions">
-          <button onClick={this._startRecord}>
-            Start
-          </button>
+          {this.state.recording ? null : (
+            <button onClick={this._startRecord}>
+              <span className="record-icon" />
+              Record
+            </button>
+          )}
           <button onClick={this._stopRecord}>
-            Stop
+            <span className="stop-icon" />
+            {this.state.recording ? "Stop" : "Cancel"}
           </button>
         </div>
       </div>
@@ -153,9 +158,15 @@ var Chat = React.createClass({
   },
   _startRecord: function() {
     this.state.vr.start();
+    this.setState({
+      recording: true
+    });
   },
   _stopRecord: function() {
     this.state.vr.stop();
+    this.setState({
+      recording: false
+    });
   },
   _onUploadRecord: function(url) {
     this._submitMessage(url);

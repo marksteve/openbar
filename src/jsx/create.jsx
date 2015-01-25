@@ -47,21 +47,23 @@ var Create = React.createClass({
     return this.state.bar ? (
       <div className="create">
         <h3>Embed code</h3>
+        <p>Ok, awesome! Now you can sprinkle a little code on your page and get a nice little OpenBar of your own. Just copy this code before the end of your <code>&lt;body&gt;</code> tag.</p>
         <pre><code dangerouslySetInnerHTML={{__html: embed}} /></pre>
+        <p>On the other hand, you could just open it up right now and start chatting.</p>
         <p>
           <Router.Link
             to="bar"
             className="button"
             params={{barId: this.state.bar.barId}}
           >
-            Open bar
+            Go to your bar
           </Router.Link>
         </p>
       </div>
     ): (
       <div className="create">
         <form onSubmit={this._onSubmit}>
-          <h2>Create a bar</h2>
+          <h2>Open a bar</h2>
           <p>
             <label>
               Name it! Make it your own.
@@ -69,8 +71,10 @@ var Create = React.createClass({
             </label>
           </p>
           <p>
-            <input type="checkbox" id="private" onChange={this._togglePrivate} />
-            <label htmlFor="private">Create a speakeasy bar</label>
+            <label className="speakeasy">
+              <input type="checkbox" id="private" onChange={this._togglePrivate} />
+              Create a passphrase protected bar
+            </label>
           </p>
           {this.state.private ? (
           <p>

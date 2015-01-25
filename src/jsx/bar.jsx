@@ -1,6 +1,5 @@
 var React = require('react/addons');
 var Router = require('react-router');
-var moment = require('moment');
 
 var Backend = require('./backend.js');
 var Chat = require('./chat.jsx');
@@ -58,7 +57,7 @@ var Base = {
     var message = {
       name: this.state.user.name,
       color: this.state.user.color,
-      timestamp: moment().calendar(),
+      timestamp: new Date().getTime(),
       text: text,
     };
     this.state.bar.newMessage(message);

@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var marked = require('marked');
 var superagent = require('superagent');
+var moment = require('moment');
 
 marked.setOptions({
   gfm: true,
@@ -53,7 +54,7 @@ var Message = React.createClass({
     return (
       <li>
         <span className="name" style={style}>{message.name}</span>
-        <span className="timestamp">{message.timestamp}</span>
+        <span className="timestamp">{moment(message.timestamp).fromNow()}</span>
         <div
           className="text"
           dangerouslySetInnerHTML={{__html: html}}

@@ -4,24 +4,52 @@ var Router = require('react-router');
 var Backend = require('./backend.js');
 var Chat = require('./chat.jsx');
 
+var Passphrase = React.createClass({
+  componentDidMount: function() {
+    this.refs.passphrase.getDOMNode().focus();
+  },
+  _submit: function(e) {
+    e.preventDefault();
+    var passphrase = this.refs.passphrase.getDOMNode().value;
+    this.props.onSubmitPassphrase(passphrase);
+  },
+  render: function() {
+    return (
+      <div className="passphrase">
+        <h3>This bar doesn't exist or has a passphrase.</h3>
+        <p>Would you happen to know what it is?</p>
+        <form onSubmit={this._submit}>
+          <input ref="passphrase" type="password" placeholder="Passphrase" />
+        </form>
+      </div>
+    );
+  }
+});
+
 var Base = {
   getInitialState: function() {
     return {
       user: null,
       bar: null,
       messages: [],
+      loading: false,
       toggled: false,
-      widget: true
+      widget: true,
+      askPassphrase: false
     };
   },
-  componentDidMount: function() {
-    var barId = this.props.id || this.getParams().barId;
-    Backend.Bar.get(barId, this._loadBar);
-  },
   componentDidUpdate: function(prevProps, prevState) {
-    if (this.state.bar && !prevState.bar) {
+    // First toggle
+    if (prevState.toggled !== this.state.toggled
+      && this.state.toggled
+      && !this.state.bar) {
+      this._getBar();
+    }
+    // Newly opened bar
+    if (!prevState.bar && this.state.bar) {
       this.state.bar.onMessage(this._loadMessage);
     }
+    // Scroll to bottom on toggle
     if (this.state.bar && this.state.toggled) {
       this.refs.chat.scrollToBottom();
     }
@@ -31,12 +59,36 @@ var Base = {
       toggled: !this.state.toggled
     });
   },
+  _getBar: function(passphrase) {
+    var barId = this.props.id || this.getParams().barId;
+    Backend.Bar.get(barId, passphrase, this._loadBar, this._loadBarError);
+  },
   _loadBar: function(bar) {
-    this.setState({bar: bar});
+    this.setState({
+      bar: bar,
+      loading: false,
+      askPassphrase: false
+    });
     bar.checkAuth(this._loadUser, this._loadUserError);
   },
+  _loadBarError: function() {
+    this.setState({
+      loading: false,
+      toggled: true,
+      askPassphrase: true
+    });
+  },
+  _submitPassphrase: function(passphrase) {
+    this.setState({
+      loading: true
+    });
+    this._getBar(passphrase);
+  },
   _loadUser: function(user) {
-    this.setState({user: user});
+    this.setState({
+      loading: false,
+      user: user
+    });
   },
   _loadUserError: function(error) {
     console.log(error);
@@ -65,13 +117,6 @@ var Base = {
   _close: function() {
     this.setState({toggled: false});
   },
-  _renderClose: function() {
-    return this.state.widget ? (
-      <button className="close" onClick={this._close}>
-        &times;
-      </button>
-    ) : null;
-  },
   render: function() {
     var bar = this.state.bar;
     var className = React.addons.classSet({
@@ -79,23 +124,33 @@ var Base = {
       'widget': this.state.widget
     });
     return this.state.toggled ? (
-      bar ? (
-        <div className={className}>
-          <div className="bar-header">
-            <h2 className="bar-title">{bar.title}</h2>
-            {this._renderClose()}
-          </div>
-          <Chat
-            ref="chat"
-            messages={this.state.messages}
-            onSubmitMessage={this._submitMessage}
-          />
-        </div>
+      <div className={className}>
+      {(this.state.loading ? (
+        <div className="loading" />
       ) : (
-        <div className="openbar">
-          <div className="loading" />
-        </div>
-      )
+        this.state.bar ? (
+          <div className="app">
+            <div className="bar-header">
+              <h2 className="bar-title">{bar.title}</h2>
+              {(this.state.widget ? (
+              <button className="close" onClick={this._close}>
+                &times;
+              </button>
+              ) : null)}
+            </div>
+            <Chat
+              ref="chat"
+              messages={this.state.messages}
+              onSubmitMessage={this._submitMessage}
+            />
+          </div>
+        ) : (
+          this.state.askPassphrase ? (
+            <Passphrase onSubmitPassphrase={this._submitPassphrase} />
+          ) : null
+        )
+      ))}
+      </div>
     ) : null;
   }
 };

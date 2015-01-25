@@ -34,7 +34,7 @@ if (OpenBar) {
   // Insert CSS
   var css = document.createElement('link');
   css.href = (
-    __env && __env.__release ? 'http://development.ss15-incorgito.divshot.io' : ''
+    window.__env && __env.__release ? 'http://development.ss15-incorgito.divshot.io' : ''
   ) + '/dist/widget.css';
   css.type = 'text/css';
   css.rel = 'stylesheet';

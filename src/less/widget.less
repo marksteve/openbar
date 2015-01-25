@@ -60,9 +60,11 @@
     cursor: pointer;
   }
 
-  @-webkit-keyframes loading {
-    to { background-position: -7680px; }
-  }
+  @-webkit-keyframes loading { to { background-position: -7680px; } }
+  @-moz-keyframes loading { to { background-position: -7680px; } }
+  @-ms-keyframes loading { to { background-position: -7680px; } }
+  @-o-keyframes loading { to { background-position: -7680px; } }
+  @keyframes loading { to { background-position: -7680px; } }
 
   .loading {
     position: absolute;
@@ -76,7 +78,12 @@
     height: 256px;
 
     background-image: url(../images/loading.png);
+
     -webkit-animation: loading 1s steps(30) infinite;
+    -moz-animation: loading 1s steps(30) infinite;
+    -ms-animation: loading 1s steps(30) infinite;
+    -o-animation: loading 1s steps(30) infinite;
+    animation: loading 1s steps(30) infinite;
   }
 
   .passphrase {

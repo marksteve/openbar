@@ -44,6 +44,7 @@
     background: none;
     box-sizing: border-box;
     font-family: sans-serif;
+    color: #111;
     padding: 0;
     margin: 0;
     border: 0;
@@ -146,6 +147,7 @@
 
           .name {
             background-color: #eee;
+            color: inherit;
             display: inline-block;
             padding: 0 5px;
             margin-right: 10px;
@@ -184,12 +186,16 @@
       padding: 20px;
 
       textarea {
-        border: 1px solid silver;
-        width: 100%;
-        resize: none;
-        padding: 10px;
-        line-height: 1;
-        display: block;
+        &, &:focus {
+          background: white;
+          border: 1px solid silver;
+          box-shadow: none;
+          width: 100%;
+          resize: none;
+          padding: 10px;
+          line-height: 1;
+          display: block;
+        }
 
         &:focus {
           outline: none;

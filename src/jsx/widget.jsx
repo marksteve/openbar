@@ -32,21 +32,17 @@ function init(barId) {
   );
 }
 
-if (OpenBar) {
-  // Insert CSS
-  var css = document.createElement('link');
-  css.href = conf.BASE_URL + '/dist/widget.css';
-  css.type = 'text/css';
-  css.rel = 'stylesheet';
-  // Only call init when CSS has been loaded to avoid FOUC
-  css.onload = init.bind(null, OpenBar);
-  var h = document.getElementsByTagName('head')[0];
-  h.insertBefore(css, h.firstChild);
-  // Insert button
-  var button = document.createElement('div');
-  button.className = 'openbar-button';
-  var b = document.getElementsByTagName('body')[0];
-  b.appendChild(button);
-} else {
-  console.warn("`OpenBar` is not defined!");
-}
+// Insert CSS
+var css = document.createElement('link');
+css.href = conf.BASE_URL + '/dist/widget.css';
+css.type = 'text/css';
+css.rel = 'stylesheet';
+// Only call init when CSS has been loaded to avoid FOUC
+css.onload = init.bind(null, window.OpenBar || location.href);
+var h = document.getElementsByTagName('head')[0];
+h.insertBefore(css, h.firstChild);
+// Insert button
+var button = document.createElement('div');
+button.className = 'openbar-button';
+var b = document.getElementsByTagName('body')[0];
+b.appendChild(button);

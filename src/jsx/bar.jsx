@@ -66,7 +66,11 @@ var Base = {
   },
   _getBar: function(passphrase) {
     var barId = this.props.id || this.getParams().barId;
-    Backend.Bar.get(barId, passphrase, this._loadBar, this._loadBarError);
+    if (barId.indexOf('/') > 0) {
+      Backend.Bar.getForUrl(barId, document.title, this._loadBar, this._loadBarError);
+    } else {
+      Backend.Bar.get(barId, passphrase, this._loadBar, this._loadBarError);
+    }
   },
   _loadBar: function(bar) {
     this.setState({

@@ -36,13 +36,20 @@ var Create = React.createClass({
   render: function() {
     if (this.state.bar) {
       var embed = "&lt;script&gt;";
-      embed += "\n" + "var OpenBar = &quot;" + this.state.bar.barId + "&quot;;";
+      embed += "var OpenBar = &quot;" + this.state.bar.barId + "&quot;;";
       embed += "\n" + "(function(){var sb=document.createElement(&quot;script&quot;);";
       embed += "sb.src=&quot;" + conf.BASE_URL + "/dist/widget.min.js&quot;;";
       embed += "sb.type=&quot;text/javascript&quot;;";
       embed += "var s=document.getElementsByTagName(&quot;script&quot;)[0];";
       embed += "s.parentNode.insertBefore(sb,s)})();";
       embed += "\n" + "&lt;/script&gt;";
+    } else {
+      var inc = 'javascript:(function(){'
+        + 'var sb=document.createElement("script");sb.src="'
+        + conf.BASE_URL
+        + '/dist/widget.js";sb.type="text/javascript";'
+        + 'var b=document.getElementsByTagName("body")[0];'
+        + 'b.appendChild(sb)})();';
     }
     return this.state.bar ? (
       <div className="create">
@@ -84,6 +91,8 @@ var Create = React.createClass({
             <button type="submit">Create</button>
           </p>
         </form>
+        <h2>Bookmarklet</h2>
+        <p><a href={"javascript:" + inc}>OpenBar</a></p>
       </div>
     );
   }

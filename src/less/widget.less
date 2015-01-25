@@ -41,12 +41,18 @@
   line-height: 1.5;
 
   * {
+    background: none;
     box-sizing: border-box;
     font-family: sans-serif;
     padding: 0;
     margin: 0;
     border: 0;
     border-radius: 0;
+  }
+
+  button {
+    font-weight: normal;
+    cursor: pointer;
   }
 
   @-webkit-keyframes loading {
@@ -184,6 +190,8 @@
         width: 100%;
         resize: none;
         padding: 10px;
+        line-height: 1;
+        display: block;
 
         &:focus {
           outline: none;
@@ -191,6 +199,7 @@
       }
 
       .record {
+        text-transform: uppercase;
         position: absolute;
         top: 25px;
         right: 40px;
@@ -258,7 +267,8 @@
       }
       .close {
         right: 5px;
-        top: 4px;
+        top: 0;
+        line-height: 30px;
       }
     }
     .chat {
@@ -278,14 +288,14 @@
         }
       }
       .chatbox {
-        padding: 0 5px;
+        padding: 8px 5px;
         textarea {
           font-size: 12px;
           padding: 5px;
         }
         .record {
           font-size: 90%;
-          top: 10px;
+          top: 15px;
           right: 15px;
         }
       }

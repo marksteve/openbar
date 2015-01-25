@@ -61,5 +61,4 @@ Put this in your rules section of your Firebase configuration.
 
 ```bash
 ./build
-./deploy production # Build and deploys to divshot
 ```

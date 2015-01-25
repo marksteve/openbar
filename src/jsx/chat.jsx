@@ -184,9 +184,6 @@ var Chat = React.createClass({
   },
   _stopRecord: function() {
     this.state.vr.stop();
-    this.setState({
-      recording: false
-    });
   },
   _onUploadRecord: function(url) {
     this.props.onSubmitMessage(url, "camcord");
@@ -194,6 +191,9 @@ var Chat = React.createClass({
   _onUploadRecordError: function() {
   },
   _onStopRecord: function() {
+    this.setState({
+      recording: false
+    });
     this._toggleRecord();
   },
   render: function() {

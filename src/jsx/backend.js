@@ -17,8 +17,10 @@ function Bar(barId, ref, info, cipherKey) {
   this.title = info.title;
 }
 
+Bar.prototype.initNumMessages = 50;
+
 Bar.prototype.onMessage = function(callback) {
-  this.ref.child("messages").on("child_added", function(ss) {
+  this.ref.child("messages").limitToLast(this.initNumMessages).on("child_added", function(ss) {
     callback(this._unmarshal(ss.val()));
   }.bind(this));
 };

@@ -11,24 +11,24 @@ Put this in your rules section of your Firebase configuration.
 
     {
       "rules": {
-	".write": false,
-	".read": false,
-	"bars": {
-	  "$bar_id": {
-	    // Write only, no updates.
-	    ".write": "!data.exists()",
-	    ".read": true,
-	    "messages": {
-	      "$message_id": {
-		".write": "!data.exists()"
-	      }
-	    },
-	    "users": {
-	      "$user_id": {
-		".write": "auth.uid == $user_id"
-	      }
-	    }
-	  }
-	}
+        ".write": false,
+        ".read": false,
+        "bars": {
+          "$bar_id": {
+            // Write only, no updates.
+            ".write": "!data.exists()",
+            ".read": true,
+            "messages": {
+              "$message_id": {
+                ".write": "!data.exists()"
+              }
+            },
+            "users": {
+              "$user_id": {
+                ".write": "auth.uid == $user_id"
+              }
+            }
+          }
+        }
       }
     }

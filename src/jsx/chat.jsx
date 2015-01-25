@@ -113,9 +113,10 @@ var Chat = React.createClass({
     var messagesDiv = this.refs.messages.getDOMNode();
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   },
-  _renderMessage: function(message) {
+  _renderMessage: function(message, i) {
     return (
       <Message
+        key={i}
         scrollChatToBottom={this.scrollToBottom}
         {...message}
       />

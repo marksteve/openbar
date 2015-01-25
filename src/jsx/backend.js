@@ -1,7 +1,7 @@
 require('firebase');
 require('./MediaStreamRecorder');
 
-var conf = window.__env || require('../../conf');
+var conf = require('../../conf');
 var cryph = require('./cryptohelper');
 
 var Moniker = require('moniker');

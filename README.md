@@ -10,7 +10,7 @@ npm install
 
 ### Configure
 
-Edit `conf.js` directly
+Copy `conf-tmpl.js` into `conf.js` and fill up your own configuration values.
 
 ```js
 module.exports = {
@@ -18,13 +18,6 @@ module.exports = {
   // WARNING: Your key is exposed. Needs a server-side component to hide this.
   TRANSLOADIT_KEY: "<YOUR_TRANSLOADIT_KEY>
 };
-```
-
-or set environment variables if you're using Divshot
-
-```bash
-divshot env:add production FIREBASE_URL=<YOUR_FIREBASE_URL>
-divshot env:add production TRANSLOADIT_KEY=<YOUR_TRANSLOADIT_KEY>
 ```
 
 ### Firebase Rules

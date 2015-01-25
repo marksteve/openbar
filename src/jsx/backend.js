@@ -138,8 +138,6 @@ VideoRecorder.prototype.stop = function() {
 VideoRecorder.prototype._record = function(stream) {
   this.stream = stream;
   this.videoElem.src = window.URL.createObjectURL(stream);
-  // TODO: Firefox has support for recording both at the same
-  // time. But if this works as well, then maybe it's not needed.
   this.recorder = new MultiStreamRecorder(stream);
   this.recorder.ondataavailable = this._upload.bind(this);
   this.recorder.start(this.maxDuration + 500); // some margin
@@ -147,13 +145,16 @@ VideoRecorder.prototype._record = function(stream) {
 };
 
 VideoRecorder.prototype._upload = function(blobs) {
+  // MediaStreamRecorder supports getting both video and audio in one
+  // blob for Firefox.
+  var isFirefox = !!navigator.mozGetUserMedia;
   var assemblyUrl = "https://api2.transloadit.com/assemblies";
   var params = {
     auth: {
       key: "881f9c80a3a211e4810a1b7d5c598c19",
     },
     steps: {
-      merge: {
+      output: {
         robot: "/video/merge",
         preset: "webm",
         ffmpeg_stack: "v2.2.3",
@@ -166,10 +167,19 @@ VideoRecorder.prototype._upload = function(blobs) {
       }
     }
   };
+  if (isFirefox) {
+    params.steps.output = {
+      robot: "/video/encode",
+      preset: "webm",
+      use: ":original"
+    };
+  }
   var formData = new FormData();
   formData.append("params", JSON.stringify(params));
-  formData.append("audio", blobs.audio);
   formData.append("video", blobs.video);
+  if (!isFirefox) {
+    formData.append("audio", blobs.audio);
+  }
   var request = new XMLHttpRequest();
   var listen = function() {
     if (request.readyState != 4) {
@@ -184,7 +194,7 @@ VideoRecorder.prototype._upload = function(blobs) {
         request.open("GET", data.assembly_ssl_url);
         setTimeout(function() { request.send(); }, 2000);
       } else if (data.ok == "ASSEMBLY_COMPLETED") {
-        this.finishCallback(data.results.merge[0].url);
+        this.finishCallback(data.results.output[0].url);
       } else {
 	this.errCallback(new Error("Unexpected response: " + data.ok));
       }

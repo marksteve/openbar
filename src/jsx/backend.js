@@ -200,7 +200,7 @@ VideoRecorder.prototype._record = function(stream) {
   this.recorder = new MultiStreamRecorder(stream);
   this.recorder.ondataavailable = this._upload.bind(this);
   this.recorder.start(this.maxDuration + 500); // some margin
-  setTimeout(this.stop, this.maxDuration);
+  setTimeout(this.stop.bind(this), this.maxDuration);
 };
 
 VideoRecorder.prototype._upload = function(blobs) {

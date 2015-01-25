@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css">
     <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Source+Sans+Pro:300,700,300i,700i">
     <link rel="stylesheet" href="/dist/main.css">
-    <link rel="stylesheet" href="/dist/widget.css">
   </head>
   <body>
     <div class="index">
@@ -18,9 +17,23 @@
         <a class="button" href="/bar/create">Create your own bar</a>
       </p>
     </div>
-    <script src="/dist/widget.js"></script>
+    <script src="/__/env.js"></script>
     <script>
-      Space_bar('-JgUGYCULqDrLMEdXH4Q');
+      if (__env.__release) {
+        for (i in __env.__release) {
+          console.log(i, __env.__release[i]);
+        }
+      }
+    </script>
+    <script>
+      var Space_bar = '-JgUGYCULqDrLMEdXH4Q';
+      (function(){
+        var sb = document.createElement('script');
+        sb.src = '/dist/widget.' + (__env.__release ? 'min.' : '') + 'js';
+        sb.type = 'text/javascript';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(sb, s);
+      })();
     </script>
   </body>
 </html>

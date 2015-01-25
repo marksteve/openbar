@@ -19,15 +19,20 @@ var Create = React.createClass({
     });
   },
   render: function() {
-    var embedCode = "";
     if (this.state.bar) {
-      embedCode += "&lt;script src=&quot;http://development.ss15-incorgito.divshot.io&quot;&gt;&lt;/script&gt;";
-      embedCode += "\n&lt;script&gt;Space_bar(&#39;" + this.state.bar.ref.key() + "}&#39;)&lt;/script&gt;";
+      var embed = "&lt;script&gt;";
+      embed += "\n" + "var Space_bar = &quot;" + this.state.bar.ref.key() + "&quot;";
+      embed += "\n" + "(function(){var sb=document.createElement(&quot;script&quot;);";
+      embed += "sb.src=&quot;" + location.origin + "/dist/widget.min.js&quot;;";
+      embed += "sb.type=&quot;text/javascript&quot;;";
+      embed += "var s=document.getElementsByTagName(&quot;script&quot;)[0];";
+      embed += "s.parentNode.insertBefore(sb,s)})();";
+      embed += "\n" + "&lt;/script&gt;";
     }
     return this.state.bar ? (
       <div className="create">
         <h3>Embed code</h3>
-        <pre><code dangerouslySetInnerHTML={{__html: embedCode}} /></pre>
+        <pre><code dangerouslySetInnerHTML={{__html: embed}} /></pre>
         <p>
           <Router.Link
             to="bar"

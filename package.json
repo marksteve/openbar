@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildjs": "watchify src/jsx/main.jsx -t reactify -o dist/main.js -v",
-    "buildwidget": "watchify src/jsx/widget.jsx -t reactify -o dist/widget.js -v",
-    "buildcss": "autoless src/less/ dist/"
+    "watch-main": "watchify src/jsx/main.jsx -o dist/main.js -v",
+    "watch-widget": "watchify src/jsx/widget.jsx -o dist/widget.js -v",
+    "watch-css": "autoless src/less/ dist/",
+    "build-main": "browserify src/jsx/main.jsx -o dist/main.js",
+    "build-widget": "browserify src/jsx/widget.jsx -o dist/widget.js",
+    "build-css": "autoless --no-watch src/less/ dist/",
+    "minify-main": "uglifyjs dist/main.js --compress > dist/main.min.js",
+    "minify-widget": "uglifyjs dist/widget.js --compress --mangle > dist/widget.min.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,8 @@
     "autoless": "^0.1.6",
     "browserify": "^8.1.1",
     "reactify": "^1.0.0",
+    "uglify-js": "^2.4.16",
+    "uglifyify": "^3.0.1",
     "watchify": "^2.2.1"
   },
   "dependencies": {
@@ -35,5 +42,10 @@
     "react-tap-event-plugin": "^0.1.3",
     "superagent": "^0.21.0",
     "velocity-animate": "^1.2.1"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
   }
 }

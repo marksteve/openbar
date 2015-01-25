@@ -1,13 +1,13 @@
 require('firebase');
 require('./MediaStreamRecorder');
 
-var conf = require('./conf');
+var conf = window.__env || require('../../conf');
 var cryph = require('./cryptohelper');
 
 var Moniker = require('moniker');
 var randomColor = require('randomcolor');
 
-var rootRef = new Firebase(conf.firebaseUrl);
+var rootRef = new Firebase(conf.FIREBASE_URL);
 var barsRef = rootRef.child("bars");
 
 function Bar(barId, ref, info, cipherKey) {
@@ -197,7 +197,7 @@ VideoRecorder.prototype._upload = function(blobs) {
   var assemblyUrl = "https://api2.transloadit.com/assemblies";
   var params = {
     auth: {
-      key: conf.transloaditKey,
+      key: conf.TRANSLOADIT_KEY,
     },
     steps: {
       output: {

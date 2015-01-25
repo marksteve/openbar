@@ -1,6 +1,8 @@
 var React = require('react/addons');
 var Router = require('react-router');
 
+var conf = require('../../conf');
+
 var Create = React.createClass({
   getInitialState: function() {
     return {
@@ -34,9 +36,9 @@ var Create = React.createClass({
   render: function() {
     if (this.state.bar) {
       var embed = "&lt;script&gt;";
-      embed += "\n" + "var OpenBar = &quot;" + this.state.bar.barId + "&quot;";
+      embed += "\n" + "var OpenBar = &quot;" + this.state.bar.barId + "&quot;;";
       embed += "\n" + "(function(){var sb=document.createElement(&quot;script&quot;);";
-      embed += "sb.src=&quot;" + location.origin + "/dist/widget.min.js&quot;;";
+      embed += "sb.src=&quot;" + conf.BASE_URL + "/dist/widget.min.js&quot;;";
       embed += "sb.type=&quot;text/javascript&quot;;";
       embed += "var s=document.getElementsByTagName(&quot;script&quot;)[0];";
       embed += "s.parentNode.insertBefore(sb,s)})();";

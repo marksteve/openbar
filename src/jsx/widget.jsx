@@ -1,6 +1,8 @@
 var React = require('react/addons');
 require("react-tap-event-plugin")();
 
+var conf = require('../../conf');
+
 var Bar = require('./bar.jsx').Widget;
 
 var WidgetButton = React.createClass({
@@ -33,9 +35,7 @@ function init(barId) {
 if (OpenBar) {
   // Insert CSS
   var css = document.createElement('link');
-  css.href = (
-    window.__env && __env.__release ? 'http://development.ss15-incorgito.divshot.io' : ''
-  ) + '/dist/widget.css';
+  css.href = conf.BASE_URL + '/dist/widget.css';
   css.type = 'text/css';
   css.rel = 'stylesheet';
   // Only call init when CSS has been loaded to avoid FOUC

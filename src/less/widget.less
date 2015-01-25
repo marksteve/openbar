@@ -30,7 +30,7 @@
 }
 
 .space_bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -67,7 +67,7 @@
     -webkit-animation: loading 1s steps(30) infinite;
   }
 
-  header {
+  .bar-header {
     background: #333;
     padding: 0 20px;
     position: relative;
@@ -75,7 +75,7 @@
     height: 80px;
     line-height: 80px;
 
-    h2 {
+    .bar-title {
       color: white;
       font-size: 2em;
       font-weight: bold;
@@ -209,11 +209,11 @@
     height: 400px;
     border-left: 1px solid silver;
     font-size: 12px;
-    header {
+    .bar-header {
       height: 30px;
       line-height: 30px;
       padding: 0 5px;
-      h2 {
+      .bar-title {
         font-size: 1.2em;
       }
       .close {

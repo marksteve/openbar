@@ -81,10 +81,10 @@ var Base = {
     return this.state.toggled ? (
       bar ? (
         <div className={className}>
-          <header>
-            <h2>{bar.title}</h2>
+          <div className="bar-header">
+            <h2 className="bar-title">{bar.title}</h2>
             {this._renderClose()}
-          </header>
+          </div>
           <Chat
             ref="chat"
             messages={this.state.messages}

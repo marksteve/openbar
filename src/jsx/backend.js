@@ -1,6 +1,6 @@
 require('firebase');
-require('./MediaStreamRecorder.js');
 
+require('./MediaStreamRecorder');
 
 var rootRef = new Firebase('https://space-bar.firebaseio.com/');
 var barsRef = rootRef.child("bars");
@@ -38,7 +38,7 @@ Bar.get = function(key, callback, errCallback) {
 };
 
 
-navigator.getUserMedia  = navigator.getUserMedia ||
+var getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
@@ -57,8 +57,13 @@ VideoRecorder.prototype.start = function() {
     this.errCallback("Browser incapable");
     return;
   }
-  navigator.getUserMedia({video: true, audio: true}, this._record.bind(this), this.errCallback);
+  getUserMedia(
+    {video: true, audio: true},
+    this._record.bind(this),
+    this.errCallback
+  );
 };
+
 VideoRecorder.prototype.stop = function() {
   if (this.recorder) {
     this.recorder.stop();
@@ -68,6 +73,7 @@ VideoRecorder.prototype.stop = function() {
     this.stopCallback();
   }
 };
+
 VideoRecorder.prototype._record = function(stream) {
   this.stream = stream;
   this.videoElem.src = window.URL.createObjectURL(stream);
@@ -78,6 +84,7 @@ VideoRecorder.prototype._record = function(stream) {
   this.recorder.start(this.maxDuration + 500); // some margin
   setTimeout(this.stop, this.maxDuration);
 };
+
 VideoRecorder.prototype._upload = function(blobs) {
   var assemblyUrl = "https://api2.transloadit.com/assemblies";
   var params = {
@@ -131,7 +138,7 @@ VideoRecorder.prototype._upload = function(blobs) {
 
 VideoRecorder.prototype.maxDuration = 20000;
 
-VideoRecorder.capable = !!navigator.getUserMedia;
+VideoRecorder.capable = !!getUserMedia;
 
 module.exports = {
   Bar: Bar,

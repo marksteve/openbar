@@ -252,13 +252,13 @@
 
     padding: 100px;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     text-align: center;
 
     video {
       background: black;
       &.with-instructions {
-        background: url(../images/record-instructions.png) no-repeat center center;
+        background: white url(../images/record-instructions.png) no-repeat center center;
         width: 600px;
         height: 400px;
       }
@@ -268,7 +268,12 @@
     .actions {
       margin-top: 20px;
       button {
-        margin: 0 40px;
+        border: 1px solid silver;
+        padding: 10px 15px;
+        font-size: 1.2em;
+        font-weight: bold;
+        background: white;
+        margin: 0 20px;
         span:first-child {
           width: 1em;
           height: 1em;

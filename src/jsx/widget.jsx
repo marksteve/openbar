@@ -10,7 +10,7 @@ var WidgetButton = React.createClass({
   render: function() {
     return (
       <button onClick={this._toggleBar}>
-        Space_bar
+        OpenBar
       </button>
     );
   }
@@ -18,7 +18,7 @@ var WidgetButton = React.createClass({
 
 function init(barId) {
   var container = document.createElement('div');
-  container.classList.add('space_bar-container');
+  container.classList.add('openbar-container');
   document.body.appendChild(container);
   var bar = React.render(
     <Bar id={barId} />,
@@ -26,11 +26,11 @@ function init(barId) {
   );
   React.render(
     <WidgetButton bar={bar} />,
-    document.querySelector('.space_bar-button')
+    document.querySelector('.openbar-button')
   );
 }
 
-if (Space_bar) {
+if (OpenBar) {
   // Insert CSS
   var css = document.createElement('link');
   css.href = (
@@ -39,14 +39,14 @@ if (Space_bar) {
   css.type = 'text/css';
   css.rel = 'stylesheet';
   // Only call init when CSS has been loaded to avoid FOUC
-  css.onload = init.bind(null, Space_bar);
+  css.onload = init.bind(null, OpenBar);
   var h = document.getElementsByTagName('head')[0];
   h.insertBefore(css, h.firstChild);
   // Insert button
   var button = document.createElement('div');
-  button.className = 'space_bar-button';
+  button.className = 'openbar-button';
   var b = document.getElementsByTagName('body')[0];
   b.appendChild(button);
 } else {
-  console.warn("`Space_bar` not defined!");
+  console.warn("`OpenBar` is not defined!");
 }

@@ -75,7 +75,7 @@ var Base = {
   render: function() {
     var bar = this.state.bar;
     var className = React.addons.classSet({
-      'space_bar': true,
+      'openbar': true,
       'widget': this.state.widget
     });
     return this.state.toggled ? (
@@ -92,7 +92,7 @@ var Base = {
           />
         </div>
       ) : (
-        <div className="space_bar">
+        <div className="openbar">
           <div className="loading" />
         </div>
       )

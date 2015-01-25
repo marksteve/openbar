@@ -21,7 +21,7 @@ var Create = React.createClass({
   render: function() {
     if (this.state.bar) {
       var embed = "&lt;script&gt;";
-      embed += "\n" + "var Space_bar = &quot;" + this.state.bar.ref.key() + "&quot;";
+      embed += "\n" + "var OpenBar = &quot;" + this.state.bar.ref.key() + "&quot;";
       embed += "\n" + "(function(){var sb=document.createElement(&quot;script&quot;);";
       embed += "sb.src=&quot;" + location.origin + "/dist/widget.min.js&quot;;";
       embed += "sb.type=&quot;text/javascript&quot;;";

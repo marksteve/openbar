@@ -1,5 +1,9 @@
 # OpenBar
 
+## Compatibility
+
+Tested in Google Chrome & Firefox.
+
 ## Setup
 
 ### Get dependencies

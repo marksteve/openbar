@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var Router = require('react-router');
+var moment = require('moment');
 
 var Backend = require('./backend.js');
 var Chat = require('./chat.jsx');
@@ -7,6 +8,7 @@ var Chat = require('./chat.jsx');
 var Base = {
   getInitialState: function() {
     return {
+      user: null,
       bar: null,
       messages: [],
       toggled: false,
@@ -32,6 +34,13 @@ var Base = {
   },
   _loadBar: function(bar) {
     this.setState({bar: bar});
+    bar.checkAuth(this._loadUser, this._loadUserError);
+  },
+  _loadUser: function(user) {
+    this.setState({user: user});
+  },
+  _loadUserError: function(error) {
+    console.log(error);
   },
   _loadMessage: function(message) {
     this.setState(React.addons.update(
@@ -42,7 +51,16 @@ var Base = {
       this.refs.chat.scrollToBottom();
     }
   },
-  _submitMessage: function(message) {
+  _submitMessage: function(text) {
+    if (!this.state.user) {
+      return;
+    }
+    var message = {
+      name: this.state.user.name,
+      color: this.state.user.color,
+      timestamp: moment().calendar(),
+      text: text,
+    };
     this.state.bar.newMessage(message);
   },
   _close: function() {

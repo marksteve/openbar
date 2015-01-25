@@ -1,5 +1,4 @@
 var React = require('react/addons');
-var moment = require('moment');
 var marked = require('marked');
 var superagent = require('superagent');
 
@@ -48,9 +47,12 @@ var Message = React.createClass({
   render: function() {
     var message = this.props;
     var html = marked(message.text);
+    var style = {
+      backgroundColor: message.color
+    };
     return (
       <li>
-        <span className="name">{message.name}</span>
+        <span className="name" style={style}>{message.name}</span>
         <span className="timestamp">{message.timestamp}</span>
         <div
           className="text"
@@ -125,12 +127,7 @@ var Chat = React.createClass({
     if (text.length < 1) {
       return;
     }
-    var message = {
-      name: "Fancy Franklin",
-      timestamp: moment().calendar(),
-      text: text,
-    };
-    this.props.onSubmitMessage(message);
+    this.props.onSubmitMessage(text);
   },
   _toggleRecord: function() {
     this.setState({

@@ -119,12 +119,22 @@
           position: relative;
 
           .name {
-            font-weight: bold;
+            background-color: #eee;
+            display: inline-block;
+            padding: 0 5px;
             margin-right: 10px;
           }
 
           .timestamp {
+            right: 20px;
+            position: absolute;
+            font-size: 80%;
+            text-transform: uppercase;
             color: silver;
+          }
+
+          .text {
+            margin-top: 5px;
           }
 
           .oembed {
@@ -187,7 +197,7 @@
   }
 
   &.widget {
-    right: 0;
+    right: 10px;
     width: 300px;
     height: 400px;
     border-left: 1px solid silver;
@@ -210,7 +220,10 @@
         bottom: 40px;
         ul {
           li {
-            padding: 5px 10px;
+            padding: 5px;
+            .timestamp {
+              right: 5px;
+            }
           }
           .oembed {
             max-width: 200px;

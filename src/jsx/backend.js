@@ -1,6 +1,8 @@
 require('firebase');
-
 require('./MediaStreamRecorder');
+
+var Moniker = require('moniker');
+var randomColor = require('randomcolor');
 
 var rootRef = new Firebase('https://space-bar.firebaseio.com/');
 var barsRef = rootRef.child("bars");
@@ -17,7 +19,67 @@ Bar.prototype.onMessage = function(callback) {
 };
 
 Bar.prototype.newMessage = function(message) {
-  this.ref.child("messages").push(message);
+  return this.ref.child("messages").push(message);
+};
+
+Bar.prototype.addUser = function(user) {
+  this.ref.child("users").child(user.key).set(user);
+  return user;
+};
+
+Bar.prototype.getUser = function(key, callback, errCallback) {
+  this.ref.child("users").child(key).once("value", function(ss) {
+    if (ss.exists()) {
+      callback(ss.val());
+    } else {
+      errCallback(new Error("User does not exist."));
+    }
+  });
+};
+
+Bar.prototype.checkAuth = function(cb, errCb) {
+  rootRef.onAuth(this._checkAuth(cb, errCb));
+};
+
+Bar.prototype._checkAuth = function(cb, errCb) {
+  return (function(authData) {
+    if (authData) {
+      this.getOrAddUser(authData, cb, errCb);
+    } else {
+      rootRef.authAnonymously((function(error, authData) {
+        if (error) {
+          errCb(new Error("Failed to login. Net flaky?"));
+        } else {
+          this.getOrAddUser(authData, cb, errCb);
+        }
+      }).bind(this));
+    }
+  }).bind(this);
+};
+
+Bar.prototype.getOrAddUser = function(authData, cb, errCb) {
+  this.getUser(
+    authData.uid,
+    cb,
+    (function() {
+      cb(this.addUser({
+        key: authData.uid,
+        name: Moniker.choose(),
+        color: randomColor({
+          luminosity: 'light'
+        })
+      }));
+    }).bind(this),
+    errCb
+  );
+};
+
+Bar.prototype.authAnonymously = function(cb, options) {
+  rootRef.authAnonymously((function(error, authData) {
+    if (error) {
+      return cb(error);
+    }
+  }).bind(this), options);
 };
 
 Bar.create = function(title) {
@@ -36,7 +98,6 @@ Bar.get = function(key, callback, errCallback) {
     }
   }, errCallback);
 };
-
 
 var getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||

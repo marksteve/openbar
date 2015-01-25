@@ -35,7 +35,8 @@ var Base = {
       loading: true,
       toggled: false,
       widget: true,
-      askPassphrase: false
+      askPassphrase: false,
+      dockable: true
     };
   },
   componentDidMount: function() {
@@ -127,6 +128,9 @@ var Base = {
   _close: function() {
     this.setState({toggled: false});
   },
+  _toggleFs: function() {
+    this.setState({widget: !this.state.widget});
+  },
   render: function() {
     var bar = this.state.bar;
     var className = React.addons.classSet({
@@ -142,11 +146,18 @@ var Base = {
           <div className="app">
             <div className="bar-header">
               <h2 className="bar-title">{bar.title}</h2>
-              {(this.state.widget ? (
-              <button className="close" onClick={this._close}>
-                &times;
-              </button>
-              ) : null)}
+              <div className="bar-actions">
+                {this.state.dockable ? (
+                <button className="fs" onClick={this._toggleFs}>
+                  Toggle fullscreen
+                </button>
+                ) : null}
+                {(this.state.widget ? (
+                <button className="close" onClick={this._close}>
+                  &times;
+                </button>
+                ) : null)}
+              </div>
             </div>
             <Chat
               ref="chat"
@@ -176,7 +187,8 @@ var Route = React.createClass(
         loading: false,
         toggled: true,
         widget: false,
-        askPassphrase: false
+        askPassphrase: false,
+        dockable: false
       };
     },
     mixins: [Router.State]

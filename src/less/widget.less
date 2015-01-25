@@ -119,12 +119,27 @@
       margin: 0;
     }
 
-    .close {
+    .bar-actions {
       position: absolute;
       right: 20px;
       top: 20px;
-      color: white;
-      font-size: 2em;
+
+      line-height: 1;
+
+      button {
+        color: white;
+        margin-left: 10px;
+        &.fs {
+          background: url(../images/fs.png) no-repeat center center;
+          text-indent: -10000px;
+          width: 32px;
+          height: 32px;
+          background-size: 32px;
+        }
+        &.close {
+          font-size: 2em;
+        }
+      }
     }
   }
 
@@ -286,10 +301,19 @@
       .bar-title {
         font-size: 1.2em;
       }
-      .close {
+      .bar-actions {
         right: 5px;
         top: 0;
-        line-height: 30px;
+        button {
+          &.fs {
+            width: 16px;
+            height: 16px;
+            background-size: 16px;
+          }
+          &.close {
+            line-height: 30px;
+          }
+        }
       }
     }
     .chat {

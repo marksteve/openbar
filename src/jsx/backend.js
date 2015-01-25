@@ -266,7 +266,7 @@ VideoRecorder.prototype._upload = function(blobs) {
   request.send(formData);
 };
 
-VideoRecorder.prototype.maxDuration = 20000;
+VideoRecorder.prototype.maxDuration = 60000;
 
 VideoRecorder.capable = !!navigator.getUserMedia;
 

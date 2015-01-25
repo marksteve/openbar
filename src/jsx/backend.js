@@ -253,7 +253,7 @@ VideoRecorder.prototype._upload = function(blobs) {
         request.open("GET", data.assembly_ssl_url);
         setTimeout(function() { request.send(); }, 2000);
       } else if (data.ok == "ASSEMBLY_COMPLETED") {
-        this.finishCallback(data.results.output[0].url);
+        this.finishCallback(data.results.output[0].ssl_url);
       } else {
         this.errCallback(new Error("Unexpected response: " + data.ok));
       }

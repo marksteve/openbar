@@ -99,10 +99,10 @@ Bar.get = function(key, callback, errCallback) {
   }, errCallback);
 };
 
-var getUserMedia = navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia;
+navigator.getUserMedia = navigator.getUserMedia ||
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia ||
+  navigator.msGetUserMedia;
 
 function VideoRecorder(videoElem, finishCallback, errCallback, stopCallback) {
   this.videoElem = videoElem;
@@ -118,7 +118,7 @@ VideoRecorder.prototype.start = function() {
     this.errCallback("Browser incapable");
     return;
   }
-  getUserMedia(
+  navigator.getUserMedia(
     {video: true, audio: true},
     this._record.bind(this),
     this.errCallback
@@ -131,8 +131,8 @@ VideoRecorder.prototype.stop = function() {
     this.stream.stop();
     this.recorder = null;
     this.stream = null;
-    this.stopCallback();
   }
+  this.stopCallback();
 };
 
 VideoRecorder.prototype._record = function(stream) {
@@ -199,7 +199,7 @@ VideoRecorder.prototype._upload = function(blobs) {
 
 VideoRecorder.prototype.maxDuration = 20000;
 
-VideoRecorder.capable = !!getUserMedia;
+VideoRecorder.capable = !!navigator.getUserMedia;
 
 module.exports = {
   Bar: Bar,

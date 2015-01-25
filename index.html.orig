@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+<<<<<<< Updated upstream
+    <title>OpenBar</title>
+=======
     <title>OpenBar - Versatile open-source chat bar</title>
+>>>>>>> Stashed changes
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css">
-    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/dist/main.css">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   </head>
   <body>
+<<<<<<< Updated upstream
+    <div class="index">
+      <h1>OpenBar</h1>
+      <p>
+        <a class="button" href="/bar/create">Create your own bar</a>
+      </p>
+=======
     <div class="main-content">
       <header>
         <div class="logo-container">
@@ -16,7 +27,8 @@
         </div>
 
         <div class="flavor-text">
-          <h2>OpenBar is a versatile, open-source chat bar you can put almost anywhere. <br> No server required.</h2>
+          <h2>OpenBar is a versatile, open-source chat bar you can put almost anywhere.</h2>
+          <!-- <h3>Attach it to your website, use as a book marklet to chat on any website, chat via links publicly or securely, preferrably over drinks.</h3> -->
         </div>
       </header>
 
@@ -26,8 +38,7 @@
           <div class="col-xs-12 col-sm-6 text-col">
             <div class="text-cont">
               <h3>Easy chatbars for your website</h3>
-              <p>Why not create some lively discussion on your page, preferrably over drinks? Attach OpenBar as a widget to get instant chat, emojis and video support.</p>
-              <p>Try it out on the <strong>bottom right portion of the page</strong>.</p>
+              <p>Why not create some lively discussion on your page, preferrably over drinks? Attach OpenBar as a widget to get instant chat, emojis and video support. It's really easy to setup and use! Try it out on the <strong>bottom right portion of the page</strong>.</p>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 image-col">
@@ -42,8 +53,8 @@
           <div class="col-xs-12 col-sm-6 text-col">
             <div class="text-cont">
               <h3>Encrypted chat and password protection</h3>
-              <p><strong>Create your own private chatbar.</strong> Like the speakeasies of yore, create rooms only you and a chosen few are privy to. Encryption and passwords will keep those sneaks away.</p>
-              <p class="button-container">
+              <p><strong>Create your own private chatbars.</strong> Like the speakeasies of yore, create rooms only you and a chosen few are privy to. Encryption and passwords will keep away those sneaks.</p>
+              <p>
                 <a class="button" href="/bar/create">Let's open a bar!</a>
               </p>
             </div>
@@ -54,11 +65,7 @@
           <div class="col-xs-12 col-sm-6 text-col">
             <div class="text-cont">
               <h3>Chat on any website</h3>
-              <p><strong>Install OpenBar as a bookmarklet </strong> and chat with other people who have OpenBar on any website. Getting to know people with the same internet habits as you has never been so easy!</p>
-              <p class="button-container">
-                <small>Drag this link to your bookmarks bar.</small>
-                <a id="bookmarklet" class="button" href="/bar/create">OpenBar</a>
-              </p>
+              <p><strong>Install OpenBar as a bookmarklet</strong> and chat with other people who have OpenBar on any website. Getting to know people with the same internet habits as you has never been so easy! </p>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 image-col">
@@ -80,8 +87,8 @@
           </div>
         </div>
       </footer>
+>>>>>>> Stashed changes
     </div>
-    <div class="pointy-arrow bounce"></div>
     <script src="/__/env.js"></script>
     <script>
       if (__env.__release) {
@@ -90,22 +97,22 @@
         }
       }
     </script>
-    <script type="text/javascript">
+    <script>
       var OpenBar = '-JgWv6FlUwl7_XWWx6bS';
       (function(){
         var sb = document.createElement('script');
         sb.src = '/dist/widget.' + (__env.__release ? 'min.' : '') + 'js';
         sb.type = 'text/javascript';
-        sb.onload = setBookmarklet;
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(sb, s);
       })();
-
-      // Animation for main page
+    </script>
+    <script type="text/javascript">
+      //Animation for main page
       // set the var here
       var neon = document.querySelector(".animated-logo");
 
-      function whichTransitionEvent() {
+      function whichTransitionEvent(){
         var t;
         var el = document.createElement('fakeelement');
         var transitions = {
@@ -115,29 +122,19 @@
           'WebkitAnimation':'webkitAnimationEnd'
         }
 
-        for (t in transitions) {
-          if (el.style[t] !== undefined) {
+        for(t in transitions){
+          if( el.style[t] !== undefined ){
             return transitions[t];
           }
         }
       }
 
-      // Listen for animation end
-      neon.addEventListener(whichTransitionEvent(), function(e) {
+      // listen for animation end
+      neon.addEventListener(whichTransitionEvent(),function(e){
+        console.log(1);
         neon.classList.remove('animated-logo');
         neon.classList.add('animated-loop');
       }, false);
-
-      // Set bookmarklet link
-      function setBookmarklet() {
-        var inc = 'javascript:(function(){'
-          + 'var sb=document.createElement("script");sb.src="'
-          + BASE_URL
-          + '/dist/widget.js";sb.type="text/javascript";'
-          + 'var b=document.getElementsByTagName("body")[0];'
-          + 'b.appendChild(sb)})();';
-        document.getElementById('bookmarklet').href = inc;
-      }
     </script>
   </body>
 </html>

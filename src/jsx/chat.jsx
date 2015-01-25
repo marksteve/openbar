@@ -140,7 +140,14 @@ var Chat = React.createClass({
   _renderRecord: function() {
     return this.state.recordToggled ? (
       <div className="record-overlay">
-        <video ref="video" muted autoPlay />
+        <video
+          className={React.addons.classSet({
+            'with-instructions': !this.state.recording
+          })}
+          ref="video"
+          muted
+          autoPlay
+        />
         <div className="actions">
           {this.state.recording ? null : (
             <button onClick={this._startRecord}>

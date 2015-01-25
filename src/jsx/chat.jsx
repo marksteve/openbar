@@ -57,15 +57,19 @@ var Message = React.createClass({
       <li>
         <span className="name" style={style}>{message.name}</span>
         <span className="timestamp">{moment(message.timestamp).fromNow()}</span>
-        {message.type == "camcord" ? (<div className="oembed"><video controls src={message.text}></video></div>) : (
-	<div>
-        <div
-          className="text"
-          dangerouslySetInnerHTML={{__html: html}}
-        />
-        {this._renderOembed()}
-        </div>
-	)}
+        {message.type === 'camcord' ? (
+          <div className="oembed">
+            <video controls src={message.text} />
+          </div>
+        ) : (
+          <div>
+            <div
+              className="text"
+              dangerouslySetInnerHTML={{__html: html}}
+            />
+            {this._renderOembed()}
+          </div>
+	      )}
       </li>
     );
   }
@@ -100,6 +104,7 @@ var Chat = React.createClass({
     return {
       recordToggled: false,
       recording: false,
+      uploading: false,
       vr: null
     };
   },
@@ -186,12 +191,16 @@ var Chat = React.createClass({
     this.state.vr.stop();
   },
   _onUploadRecord: function(url) {
+    this.setState({
+      uploading: false
+    });
     this.props.onSubmitMessage(url, "camcord");
   },
   _onUploadRecordError: function() {
   },
   _onStopRecord: function() {
     this.setState({
+      uploading: true,
       recording: false
     });
     this._toggleRecord();
@@ -206,6 +215,11 @@ var Chat = React.createClass({
           </ul>
         </div>
         <div className="chatbox">
+          {this.state.uploading ? (
+          <div className="uploading">
+            Uploading your video&hellip;
+          </div>
+          ) : null}
           <ChatTextarea
             onSubmit={this._submitMessage}
           />

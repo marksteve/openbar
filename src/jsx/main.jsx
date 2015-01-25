@@ -7,7 +7,7 @@ var Backend = require('./backend.js');
 Router
   .create({
     routes: require('./routes.jsx'),
-    location: Router.HistoryLocation
+  location: Router.HistoryLocation
   })
   .run(function(Handler) {
     React.render(<Handler />, document.body);

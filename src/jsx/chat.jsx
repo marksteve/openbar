@@ -25,7 +25,7 @@ var Message = React.createClass({
     var urls = this.props.text.match(URLRegex);
     if (urls) {
       superagent
-        .get("http://iframe.ly/api/oembed")
+        .get(location.protocol + "//iframe.ly/api/oembed")
         .query({
           url: urls[0],
           api_key: conf.IFRAMELY_KEY,

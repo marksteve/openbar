@@ -31,13 +31,22 @@ function init(barId) {
 }
 
 if (Space_bar) {
+  // Insert CSS
   var css = document.createElement('link');
-  css.href = 'http://development.ss15-incorgito.divshot.io/dist/widget.css';
+  css.href = (
+    __env && __env.__release ? 'http://development.ss15-incorgito.divshot.io' : ''
+  ) + '/dist/widget.css';
   css.type = 'text/css';
   css.rel = 'stylesheet';
+  // Only call init when CSS has been loaded to avoid FOUC
   css.onload = init.bind(null, Space_bar);
   var h = document.getElementsByTagName('head')[0];
   h.insertBefore(css, h.firstChild);
+  // Insert button
+  var button = document.createElement('div');
+  button.className = 'space_bar-button';
+  var b = document.getElementsByTagName('body')[0];
+  b.appendChild(button);
 } else {
   console.warn("`Space_bar` not defined!");
 }

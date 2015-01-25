@@ -190,8 +190,8 @@ VideoRecorder.prototype.stop = function() {
     this.stream.stop();
     this.recorder = null;
     this.stream = null;
+    this.stopCallback();
   }
-  this.stopCallback();
 };
 
 VideoRecorder.prototype._record = function(stream) {

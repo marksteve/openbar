@@ -155,10 +155,17 @@ var Chat = React.createClass({
               Record
             </button>
           )}
-          <button onClick={this._stopRecord}>
-            <span className="stop-icon" />
-            {this.state.recording ? "Stop" : "Cancel"}
-          </button>
+          {this.state.recording ? (
+            <button onClick={this._stopRecord}>
+              <span className="stop-icon" />
+              Stop
+            </button>
+          ) : (
+            <button onClick={this._toggleRecord}>
+              <span className="stop-icon" />
+              Cancel
+            </button>
+          )}
         </div>
       </div>
     ) : null;

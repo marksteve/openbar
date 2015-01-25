@@ -1,6 +1,8 @@
 require('firebase');
 require('./MediaStreamRecorder');
-conf = require('./conf');
+
+var conf = require('./conf');
+var cryph = require('./cryptohelper');
 
 var Moniker = require('moniker');
 var randomColor = require('randomcolor');
@@ -8,34 +10,39 @@ var randomColor = require('randomcolor');
 var rootRef = new Firebase(conf.firebaseUrl);
 var barsRef = rootRef.child("bars");
 
-function Bar(ref, meta) {
+function Bar(barId, ref, info, cipherKey) {
+  this.cipherKey = cipherKey;
+  this.barId = barId;
   this.ref = ref;
-  this.title = meta.title;
+  info = this._unmarshal(info);
+  this.title = info.title;
 }
 
+Bar.prototype.initNumMessages = 50;
+
 Bar.prototype.onMessage = function(callback) {
-  this.ref.child("messages").on("child_added", function(ss) {
-    callback(ss.val());
-  });
+  this.ref.child("messages").limitToLast(this.initNumMessages).on("child_added", function(ss) {
+    callback(this._unmarshal(ss.val()));
+  }.bind(this));
 };
 
 Bar.prototype.newMessage = function(message) {
-  return this.ref.child("messages").push(message);
+  return this.ref.child("messages").push(this._marshal(message));
 };
 
 Bar.prototype.addUser = function(user) {
-  this.ref.child("users").child(user.key).set(user);
+  this.ref.child("users").child(user.key).set(this._marshal(user));
   return user;
 };
 
 Bar.prototype.getUser = function(key, callback, errCallback) {
   this.ref.child("users").child(key).once("value", function(ss) {
     if (ss.exists()) {
-      callback(ss.val());
+      callback(this._unmarshal(ss.val()));
     } else {
       errCallback(new Error("User does not exist."));
     }
-  });
+  }.bind(this));
 };
 
 Bar.prototype.checkAuth = function(cb, errCb) {
@@ -83,17 +90,55 @@ Bar.prototype.authAnonymously = function(cb, options) {
   }).bind(this), options);
 };
 
-Bar.create = function(title) {
-  var meta = {title: title};
-  var ref = barsRef.push({meta: meta});
-  return new Bar(ref, meta);
+Bar.prototype._marshal = function(data) {
+  if (this.cipherKey) {
+    return cryph.encryptData(this.cipherKey, data);
+  } else {
+    return data;
+  }
 };
 
-Bar.get = function(key, callback, errCallback) {
+
+Bar.prototype._unmarshal = function(marshalledData) {
+  if (this.cipherKey) {
+    return cryph.decryptData(this.cipherKey, marshalledData);
+  } else {
+    return marshalledData;
+  }
+};
+
+Bar.create = function(title, passphrase) {
+  var cipherKey = null;
+  var barId = barsRef.push().key();
+  var barKey = barId;
+  var info = {title: title};
+  var meta = {};
+  if (passphrase) {
+    barKey = cryph.hashBarId(passphrase, barId);
+    cipherKey = cryph.generateCipherKey();
+    meta.encryptedKey = cryph.encryptData(passphrase, cipherKey);
+    info = cryph.encryptData(cipherKey, info);
+  }
+  meta.info = info;
+  var ref = barsRef.child(barKey);
+  ref.set({meta: meta});
+  return new Bar(barId, ref, info, cipherKey);
+};
+
+Bar.get = function(barId, passphrase, callback, errCallback) {
+  var key = barId;
+  if (passphrase) {
+    key = cryph.hashBarId(passphrase, barId);
+  }
   var ref = barsRef.child(key);
   ref.child("meta").once("value", function(ss) {
     if (ss.exists()) {
-      callback(new Bar(ref, ss.val()));
+      var meta = ss.val();
+      var cipherKey = null;
+      if (passphrase) {
+        cipherKey = cryph.decryptData(passphrase, meta.encryptedKey);
+      }
+      callback(new Bar(barId, ref, meta.info, cipherKey));
     } else {
       errCallback(new Error("Bar does not exist."));
     }
@@ -197,7 +242,7 @@ VideoRecorder.prototype._upload = function(blobs) {
       } else if (data.ok == "ASSEMBLY_COMPLETED") {
         this.finishCallback(data.results.output[0].url);
       } else {
-	this.errCallback(new Error("Unexpected response: " + data.ok));
+        this.errCallback(new Error("Unexpected response: " + data.ok));
       }
     } else {
       this.errCallback(new Error("Unexpected response: " + request.status));
@@ -219,3 +264,5 @@ module.exports = {
 
 // for debugging
 window.root = rootRef;
+window.cryph = cryph;
+window.Bar = Bar;

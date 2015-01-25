@@ -68,6 +68,23 @@
     -webkit-animation: loading 1s steps(30) infinite;
   }
 
+  .passphrase {
+    padding: 40px;
+    line-height: 1.2;
+    h3, p {
+      margin-bottom: 20px;
+    }
+    input {
+      line-height: 1;
+      border: 1px solid silver;
+      padding: 5px 10px;
+      width: 100%;
+    }
+    h3, p, input {
+      font-size: 1.5em;
+    }
+  }
+
   .bar-header {
     background: #333;
     padding: 0 20px;
@@ -229,7 +246,8 @@
     right: 10px;
     width: 300px;
     height: 400px;
-    border-left: 1px solid silver;
+    border: 1px solid silver;
+    border-bottom: 0;
     font-size: 12px;
     .bar-header {
       height: 30px;

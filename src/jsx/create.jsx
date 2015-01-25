@@ -43,13 +43,6 @@ var Create = React.createClass({
       embed += "var s=document.getElementsByTagName(&quot;script&quot;)[0];";
       embed += "s.parentNode.insertBefore(sb,s)})();";
       embed += "\n" + "&lt;/script&gt;";
-    } else {
-      var inc = 'javascript:(function(){'
-        + 'var sb=document.createElement("script");sb.src="'
-        + conf.BASE_URL
-        + '/dist/widget.js";sb.type="text/javascript";'
-        + 'var b=document.getElementsByTagName("body")[0];'
-        + 'b.appendChild(sb)})();';
     }
     return this.state.bar ? (
       <div className="create">
@@ -91,8 +84,6 @@ var Create = React.createClass({
             <button type="submit">Create</button>
           </p>
         </form>
-        <h2>Bookmarklet</h2>
-        <p><a href={"javascript:" + inc}>OpenBar</a></p>
       </div>
     );
   }

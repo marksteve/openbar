@@ -46,3 +46,5 @@ var button = document.createElement('div');
 button.className = 'openbar-button';
 var b = document.getElementsByTagName('body')[0];
 b.appendChild(button);
+
+window.BASE_URL = conf.BASE_URL;

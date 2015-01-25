@@ -56,7 +56,8 @@
               <h3>Chat on any website</h3>
               <p><strong>Install OpenBar as a bookmarklet</strong> and chat with other people who have OpenBar on any website. Getting to know people with the same internet habits as you has never been so easy!</p>
               <p class="button-container">
-                <a class="button" href="/bar/create">Install the bookmarklet</a>
+                <small>Drag this link to your bookmarks bar.</small>
+                <a id="bookmarklet" class="button" href="/bar/create">OpenBar</a>
               </p>
             </div>
           </div>
@@ -88,22 +89,22 @@
         }
       }
     </script>
-    <script>
+    <script type="text/javascript">
       var OpenBar = '-JgWv6FlUwl7_XWWx6bS';
       (function(){
         var sb = document.createElement('script');
         sb.src = '/dist/widget.' + (__env.__release ? 'min.' : '') + 'js';
         sb.type = 'text/javascript';
+        sb.onload = setBookmarklet;
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(sb, s);
       })();
-    </script>
-    <script type="text/javascript">
-      //Animation for main page
+
+      // Animation for main page
       // set the var here
       var neon = document.querySelector(".animated-logo");
 
-      function whichTransitionEvent(){
+      function whichTransitionEvent() {
         var t;
         var el = document.createElement('fakeelement');
         var transitions = {
@@ -113,19 +114,29 @@
           'WebkitAnimation':'webkitAnimationEnd'
         }
 
-        for(t in transitions){
-          if( el.style[t] !== undefined ){
+        for (t in transitions) {
+          if (el.style[t] !== undefined) {
             return transitions[t];
           }
         }
       }
 
-      // listen for animation end
-      neon.addEventListener(whichTransitionEvent(),function(e){
-        console.log(1);
+      // Listen for animation end
+      neon.addEventListener(whichTransitionEvent(), function(e) {
         neon.classList.remove('animated-logo');
         neon.classList.add('animated-loop');
       }, false);
+
+      // Set bookmarklet link
+      function setBookmarklet() {
+        var inc = 'javascript:(function(){'
+          + 'var sb=document.createElement("script");sb.src="'
+          + BASE_URL
+          + '/dist/widget.js";sb.type="text/javascript";'
+          + 'var b=document.getElementsByTagName("body")[0];'
+          + 'b.appendChild(sb)})();';
+        document.getElementById('bookmarklet').href = inc;
+      }
     </script>
   </body>
 </html>

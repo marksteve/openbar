@@ -55,11 +55,15 @@ var Message = React.createClass({
       <li>
         <span className="name" style={style}>{message.name}</span>
         <span className="timestamp">{moment(message.timestamp).fromNow()}</span>
+        {message.type == "camcord" ? (<div className="oembed"><video controls src={message.text}></video></div>) : (
+	<div>
         <div
           className="text"
           dangerouslySetInnerHTML={{__html: html}}
         />
         {this._renderOembed()}
+        </div>
+	)}
       </li>
     );
   }
@@ -183,7 +187,7 @@ var Chat = React.createClass({
     });
   },
   _onUploadRecord: function(url) {
-    this._submitMessage(url);
+    this.props.onSubmitMessage(url, "camcord");
   },
   _onUploadRecordError: function() {
   },

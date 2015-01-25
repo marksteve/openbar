@@ -16,7 +16,7 @@ var Passphrase = React.createClass({
   render: function() {
     return (
       <div className="passphrase">
-        <h3>This bar doesn't exist or has a passphrase.</h3>
+        <h3>This bar does not exist or has a passphrase.</h3>
         <p>Would you happen to know what it is?</p>
         <form onSubmit={this._submit}>
           <input ref="passphrase" type="password" placeholder="Passphrase" />
@@ -107,7 +107,7 @@ var Base = {
       this.refs.chat.scrollToBottom();
     }
   },
-  _submitMessage: function(text) {
+  _submitMessage: function(text, type) {
     if (!this.state.user) {
       return;
     }
@@ -116,6 +116,7 @@ var Base = {
       color: this.state.user.color,
       timestamp: new Date().getTime(),
       text: text,
+      type: type || "markdown"
     };
     this.state.bar.newMessage(message);
   },

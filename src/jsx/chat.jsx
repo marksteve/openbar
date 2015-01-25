@@ -3,6 +3,8 @@ var marked = require('marked');
 var superagent = require('superagent');
 var moment = require('moment');
 
+var conf = require('../../conf');
+
 marked.setOptions({
   gfm: true,
   sanitize: true
@@ -26,7 +28,7 @@ var Message = React.createClass({
         .get("http://iframe.ly/api/oembed")
         .query({
           url: urls[0],
-          api_key: "90359a4cb5007d8ac4481a"
+          api_key: conf.IFRAMELY_KEY,
         })
         .end(this._loadOembed);
     }

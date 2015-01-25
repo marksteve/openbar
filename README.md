@@ -14,9 +14,10 @@ Copy `conf-tmpl.js` into `conf.js` and fill up your own configuration values.
 
 ```js
 module.exports = {
+  BASE_URL: "", // No trailing slash
   FIREBASE_URL: "<YOUR_FIREBASE_URL>",
-  // WARNING: Your key is exposed. Needs a server-side component to hide this.
-  TRANSLOADIT_KEY: "<YOUR_TRANSLOADIT_KEY>
+  TRANSLOADIT_KEY: "<YOUR_TRANSLOADIT_KEY>", // WARNING: Your key is exposed. Needs a server-side component to hide this.
+  IFRAMELY_KEY: "<YOUR_IFRAMELY_KEY>"
 };
 ```
 

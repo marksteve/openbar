@@ -107,9 +107,11 @@ Bar.prototype._unmarshal = function(marshalledData) {
   }
 };
 
-Bar.create = function(title, passphrase) {
+Bar.create = function(title, passphrase, barId) {
   var cipherKey = null;
-  var barId = barsRef.push().key();
+  if (!barId) {
+    barId = barsRef.push().key();
+  }
   var barKey = barId;
   var info = {title: title};
   var meta = {};
@@ -143,6 +145,17 @@ Bar.get = function(barId, passphrase, callback, errCallback) {
       errCallback(new Error("Bar does not exist."));
     }
   }, errCallback);
+};
+
+Bar.getForUrl = function(url, title, callback, errCallback) {
+  var barId = cryph.hashBarId(url, "");
+  Bar.get(barId, null, callback, function(error) {
+    if (error.message == "Bar does not exist.") {
+      callback(Bar.create(title, null, barId));
+    } else {
+      errCallback(error);
+    }
+  });
 };
 
 navigator.getUserMedia = navigator.getUserMedia ||

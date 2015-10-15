@@ -1,5 +1,8 @@
 # OpenBar
 
+OpenBar is a versatile, open-source chat bar you can put almost anywhere. 
+No server required.
+
 ## Compatibility
 
 Tested in Google Chrome & Firefox.
